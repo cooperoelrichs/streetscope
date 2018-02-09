@@ -19,10 +19,10 @@ for file_name in files_given:
     continue
   else:
     file_path = file_name
-    print 'adding ' + file_path
+    print('adding ' + file_path)
 
     with open(file_path, 'r') as csvfile:
-      print "open file"
+      print('open file')
       csv_reader = csv.DictReader(csvfile, fieldnames=[], restkey='undefined-fieldnames', delimiter=',')
 
       current_row = 0
@@ -33,7 +33,7 @@ for file_name in files_given:
           continue
         address = row
         if current_row % 1000 == 0:
-          print "%s addresses indexed" % current_row
+          print('%s addresses indexed' % current_row)
         es.index(index='addresses', doc_type='address', id=current_row-1, body={'NUMBER': address[' NUMBER'], 'STREET': address[' STREET'], 'ADDRESS': address[' NUMBER'] + ' ' + address[' STREET'], 'X': address['LON'], 'Y': address[' LAT']})
 
     csvfile.close()
