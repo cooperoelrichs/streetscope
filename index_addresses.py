@@ -2,7 +2,7 @@ import sys
 import csv
 import re
 import os
-from urlparse import urlparse
+from urllib.request import urlparse
 from elasticsearch import Elasticsearch
 
 if os.environ.get('BONSAI_URL'):
