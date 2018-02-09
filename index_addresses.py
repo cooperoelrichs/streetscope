@@ -45,11 +45,11 @@ for file_name in files_given:
                     doc_type='address',
                     id=current_row-1,
                     body={
-                        'NUMBER': address[' NUMBER'],
-                        'STREET': address[' STREET'],
-                        'ADDRESS': address[' NUMBER'] + ' ' + address[' STREET'],
-                        'X': address['LON'],
-                        'Y': address[' LAT']}
+                        'NUMBER': address['number'],
+                        'STREET': address['street'],
+                        'ADDRESS': address['number'] + ' ' + address['street'],
+                        'X': address['lon'],
+                        'Y': address['lat']}
                     )
 
         csvfile.close()
