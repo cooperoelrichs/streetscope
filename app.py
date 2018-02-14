@@ -2,11 +2,12 @@ from collections import OrderedDict
 import csv
 import json
 import os
-from urlparse import urlparse
+from urllib.request import urlparse
 
 from flask import Flask, render_template, jsonify, request, Response
 from elasticsearch import Elasticsearch
-import usaddress
+# import usaddress
+
 
 app = Flask(__name__)
 
@@ -42,20 +43,21 @@ def search_page():
 def about():
   return render_template('about.html')
 
-def address_parts(address):
-  address_parts = []
-  for part in usaddress.parse(address):
-    address_parts.append(part[1])
-
-  return address_parts
+# def address_parts(address):
+#   address_parts = []
+#   for part in usaddress.parse(address):
+#     address_parts.append(part[1])
+#
+#   return address_parts
 
 def address_well_formed(address=''):
-  parts = address_parts(address)
-  well_formed = 'StreetName' in parts and 'AddressNumber' in parts
+  # parts = address_parts(address)
+  # well_formed = 'StreetName' in parts and 'AddressNumber' in parts
+  well_formed = True
 
   return {
     'address': address,
-    'address_parts': address_parts,
+    # 'address_parts': address_parts,
     'well_formed': well_formed
   }
 
