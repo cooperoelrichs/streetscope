@@ -8,6 +8,42 @@ from urllib.request import urlparse
 from elasticsearch import Elasticsearch, helpers
 
 
+# curl -XDELETE 'localhost:9200/addresses?pretty'
+
+def format_address(unit, number, street, city, region, postcode):
+    if unit != '':
+        unit = '%s, ' % unit
+    else:
+        unit = ''
+
+    if number != '':
+        number = '%s ' % number
+    else:
+        number = ''
+
+    if street != '':
+        street = '%s, ' % street
+    else:
+        street = ''
+
+    if city != '':
+        city = '%s, ' % city
+    else:
+        city = ''
+
+    if region != '':
+        region = '%s ' % region
+    else:
+        region = ''
+
+    if postcode != '':
+        postcode = '%s' % postcode
+    else:
+        postcode = ''
+
+    return unit + number + street + city + region + postcode
+
+
 def f_len(file_path):
     length = 0
     for line in open(file_path):
@@ -58,14 +94,19 @@ def genereate_actions(file_path, file_length):
                 '_source': {  # '_body'
                     'NUMBER': address['number'],
                     'STREET': address['street'],
-                    'ADDRESS': address['number'] + ' ' + address['street'],
                     'X': address['lon'],
                     'Y': address['lat'],
-                    # 'UNIT': address['unit'],
-                    # 'CITY': address['city'],
-                    # 'POSTCODE': address['postcode'],
-                    # 'REGION': address['region'],
-                    # 'ACCURACY': address['accuracy'],
+
+                    'UNIT': address['unit'],
+                    'CITY': address['city'],
+                    'POSTCODE': address['postcode'],
+                    'REGION': address['region'],
+                    'ACCURACY': address['accuracy'],
+
+                    'ADDRESS': format_address(
+                        address['unit'], address['number'], address['street'],
+                        address['city'], address['region'], address['postcode']
+                    ),
                 }
             }
 
